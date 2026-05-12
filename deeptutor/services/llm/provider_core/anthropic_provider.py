@@ -48,7 +48,12 @@ class AnthropicProvider(LLMProvider):
         if api_key:
             client_kw["api_key"] = api_key
         if api_base:
-            client_kw["base_url"] = sanitize_url(api_base)
+            normalized = sanitize_url(api_base)
+            # The Anthropic SDK appends its own "/v1/..." path, so a base URL
+            # ending in /v1 would produce "/v1/v1/messages" and 404.
+            if normalized.endswith("/v1"):
+                normalized = normalized[: -len("/v1")]
+            client_kw["base_url"] = normalized
         if extra_headers:
             client_kw["default_headers"] = extra_headers
         self._client = AsyncAnthropic(**client_kw)

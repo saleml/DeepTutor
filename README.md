@@ -24,6 +24,13 @@
 
 ---
 
+> ⚠️ **Personal fork notice (saleml/DeepTutor).** Forked from upstream [HKUDS/DeepTutor](https://github.com/HKUDS/DeepTutor) at commit [`ac8f00b`](https://github.com/HKUDS/DeepTutor/commit/ac8f00b) (v1.3.10, 2026-05-10).
+> Local changes on top of upstream:
+> - **Fix: Anthropic `base_url` `/v1` duplication.** When `model_catalog.json` sets the Anthropic endpoint to `https://api.anthropic.com/v1`, the official `anthropic` Python SDK still appends its own `/v1/messages` path, producing requests to `/v1/v1/messages` that 404 with a `not_found_error`. Both `deeptutor/services/llm/provider_core/anthropic_provider.py` and `deeptutor/tutorbot/providers/anthropic_provider.py` now strip a trailing `/v1` from `base_url` before constructing `AsyncAnthropic(...)`.
+> - **Added: [`CLAUDE.md`](CLAUDE.md)** with second-laptop setup instructions for syncing `data/` via Google Drive.
+
+---
+
 > 🤝 **We welcome any kinds of contributing!** See our [Contributing Guide](CONTRIBUTING.md) for branching strategy, coding standards, and how to get started.
 
 ### 📦 Releases
